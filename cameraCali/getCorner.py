@@ -32,7 +32,6 @@ def getCorner(filename, pw, ph):
 
         if ret:
             obj_points.append(objp)
-            corners2 = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)  # 第三个为查找区间 第四个为不查找区(无)
             """
             Parameters
         image	Input single-channel, 8-bit or float image.
@@ -41,6 +40,7 @@ def getCorner(filename, pw, ph):
         zeroZone	Half of the size of the dead region in the middle of the search zone over which the summation in the formula below is not done. It is used sometimes to avoid possible singularities of the autocorrelation matrix. The value of (-1,-1) indicates that there is no such a size.
         criteria	Criteria for termination of the iterative process of corner refinement. That is, the process of corner position refinement stops either after criteria.maxCount iterations or when the corner position moves by less than criteria.epsilon on some iteration.
             """
+            corners2 = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)  # 第三个为查找区间 第四个为不查找区(无)
             img_points.append(corners)
             cv.drawChessboardCorners(img, (ph, pw), corners2, ret)
             cv.namedWindow('img', cv.WINDOW_NORMAL)
