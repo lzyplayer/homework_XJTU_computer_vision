@@ -7,11 +7,10 @@ import numpy as np
 import cv2 as cv
 import os
 
-target_name = '../video/car2.flv'  # car2.flv.
+target_name = '../video/car2.flv'  # car1.flv.
 if not os.path.exists(target_name):
     print('file not exists!')
 cap = cv.VideoCapture(target_name)
-
 # 测试视频读取        # frame.shape  (480 580+-)
 # ret, frame = cap.read()
 # if frame is not None:
@@ -20,8 +19,8 @@ cap = cv.VideoCapture(target_name)
 #     cv.waitKey()
 #     1==1
 # 角点参数
-feature_param = dict(maxCorners=100,
-                     qualityLevel=0.3,
+feature_param = dict(maxCorners=50,
+                     qualityLevel=0.4,
                      minDistance=7,
                      blockSize=7,
                      mask=None)
@@ -53,9 +52,9 @@ while True:
         cv.waitKey()
         break
     curr_gray = cv.cvtColor(curr_frame, cv.COLOR_BGR2GRAY)
-    # curr_corner = cv.goodFeaturesToTrack(curr_gray,**feature_param)   #和其特征角点
+    curr_corner_test = cv.goodFeaturesToTrack(curr_gray, **feature_param)  # 和其特征角点(optional)
     # LK光流
-    curr_corners, status, err = cv.calcOpticalFlowPyrLK(ori_gray, curr_gray, ori_corners, None, **lk_params)
+    curr_corners, status, err = cv.calcOpticalFlowPyrLK(ori_gray, curr_gray, ori_corners, curr_corner_test, **lk_params)
 
     # 选择匹配上点
     match_ori = ori_corners[status == 1]
@@ -69,7 +68,7 @@ while True:
         frame = cv.circle(curr_frame, (a, b), 5, color[i].tolist(), -1)
     img = cv.add(curr_frame, mask)
     cv.imshow('frame', img)
-    k = cv.waitKey(100) #但帧等待时间
+    k = cv.waitKey(100)  # 帧等待时间
     # if k == 27: & 0xff
     #     break
     # Now update the previous frame and  previous points
