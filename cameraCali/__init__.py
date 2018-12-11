@@ -10,10 +10,11 @@ if __name__ == '__main__':
     ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(obj_p, img_p, img_shape, None, None)
     img = cv.imread(seleimg)
     h, w = img.shape[:2]
-    newmtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h)) #优化变换矩阵，给出兴趣区域
+    newmtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w, h), 0, (w, h)) #优化变换矩阵，给出兴趣区域
     result = cv.undistort(img, mtx, dist, None, newmtx)
     # x, y, w, h = roi
     # result = result[y:y + h, x:x + w]
-    cv.imshow('result',result)
+    cv.namedWindow("result", cv.WINDOW_NORMAL)
+    cv.imshow('result', result)
     cv.waitKey()
 

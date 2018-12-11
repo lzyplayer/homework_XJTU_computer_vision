@@ -43,8 +43,9 @@ def getCorner(filename, pw, ph):
             """
             img_points.append(corners)
             cv.drawChessboardCorners(img, (ph, pw), corners2, ret)
-            # cv.imshow('img', img)
-            # cv.waitKey(100)
+            cv.namedWindow('img', cv.WINDOW_NORMAL)
+            cv.imshow('img', img)
+            cv.waitKey(100)
             # input("wait command")
     cv.destroyAllWindows()
     img_shape = gray.shape[::-1]
