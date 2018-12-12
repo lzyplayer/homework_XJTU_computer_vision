@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # @Time     : 2018/12/10 16:55
-# @Author   : 阳阳酱
+# @Author   : vickylzy
 # original code:"https://docs.opencv.org/4.0.0-beta/d7/d8b/tutorial_py_lucas_kanade.html"
 
 import numpy as np
 import cv2 as cv
 import os
 
-target_name = '../video/car2.flv'  # car1.flv.
+target_name = '../video/car1.flv'  # car1.flv.
 if not os.path.exists(target_name):
     print('file not exists!')
 cap = cv.VideoCapture(target_name)
@@ -20,7 +20,7 @@ cap = cv.VideoCapture(target_name)
 #     1==1
 # 角点参数
 feature_param = dict(maxCorners=50,
-                     qualityLevel=0.4,
+                     qualityLevel=0.2,
                      minDistance=7,
                      blockSize=7,
                      mask=None)
