@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # @Time     : 2018/12/10 11:16
-# @Author   : vickylzy
+# @Author   : vickyLzy
 # original code:"https://docs.opencv.org/trunk/dc/dbb/tutorial_py_calibration.html"
 
 
@@ -33,19 +33,25 @@ def getCorner(filename, pw, ph):
         if ret:
             obj_points.append(objp)
             """
+            亚像素优化
             Parameters
         image	Input single-channel, 8-bit or float image.
         corners	Initial coordinates of the input corners and refined coordinates provided for output.
         winSize	Half of the side length of the search window. For example, if winSize=Size(5,5) , then a (5∗2+1)×(5∗2+1)=11×11 search window is used.
         zeroZone	Half of the size of the dead region in the middle of the search zone over which the summation in the formula below is not done. It is used sometimes to avoid possible singularities of the autocorrelation matrix. The value of (-1,-1) indicates that there is no such a size.
         criteria	Criteria for termination of the iterative process of corner refinement. That is, the process of corner position refinement stops either after criteria.maxCount iterations or when the corner position moves by less than criteria.epsilon on some iteration.
+            
+            第三个为精确优化坐标的窗口大小5x5 ,以当前old_corner为中心点占据1像素，四个方向区间长5个像素(5*2+1=11) 
+            第四个为不查找区(-1=无),
+            本例中无明显效果
+            sum(abs(corners2-corners))=0
             """
-            corners2 = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)  # 第三个为查找区间 第四个为不查找区(无)
-            img_points.append(corners)
+            corners2 = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
+            img_points.append(corners2)
             cv.drawChessboardCorners(img, (ph, pw), corners2, ret)
             cv.namedWindow('img', cv.WINDOW_NORMAL)
             cv.imshow('img', img)
-            cv.waitKey(100)
+            cv.waitKey(300)
             # input("wait command")
     cv.destroyAllWindows()
     img_shape = gray.shape[::-1]
