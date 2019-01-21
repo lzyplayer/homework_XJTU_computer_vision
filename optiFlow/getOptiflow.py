@@ -52,9 +52,10 @@ while True:
         cv.waitKey()
         break
     curr_gray = cv.cvtColor(curr_frame, cv.COLOR_BGR2GRAY)
-    curr_corner_test = cv.goodFeaturesToTrack(curr_gray, **feature_param)  # 和其特征角点(optional)
+    # curr_corner_test = cv.goodFeaturesToTrack(curr_gray, **feature_param)  # 和其特征角点(optional)
     # LK光流
-    curr_corners, status, err = cv.calcOpticalFlowPyrLK(ori_gray, curr_gray, ori_corners, curr_corner_test, **lk_params)
+    curr_corners, status, err = cv.calcOpticalFlowPyrLK(ori_gray, curr_gray, ori_corners, None, **lk_params)
+    # (ori_gray, curr_gray, ori_corners, curr_corner_test , **lk_params)
 
     # 选择匹配上点
     match_ori = ori_corners[status == 1]
