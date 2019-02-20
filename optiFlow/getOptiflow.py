@@ -66,10 +66,10 @@ while True:
         a, b = new_cor.ravel()  # 返回一维数据，new_cor内嵌套维度过高
         c, d = ori_cor.ravel()
         mask = cv.line(mask, (a, b), (c, d), color[i].tolist(), 2)
-        frame = cv.circle(curr_frame, (a, b), 5, color[i].tolist(), -1)
+        frame = cv.circle(curr_frame, (a, b), 0, color[i].tolist(), -1)
     img = cv.add(curr_frame, mask)
     cv.imshow('frame', img)
-    k = cv.waitKey(100)  # 帧等待时间
+    k = cv.waitKey(100)  # 帧等待时间100
     # if k == 27: & 0xff
     #     break
     # Now update the previous frame and  previous points
