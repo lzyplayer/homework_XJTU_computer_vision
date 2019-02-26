@@ -7,9 +7,9 @@ import numpy as np
 import cv2 as cv
 import os
 
-target_name = '../video/car1.flv'  # car1.flv.
+target_name = '../video/car2.flv'  # car1.flv.
 if not os.path.exists(target_name):
-    print('file not exists!')
+    raise Exception('file not exists!', target_name)
 cap = cv.VideoCapture(target_name)
 # 测试视频读取        # frame.shape  (480 580+-)
 # ret, frame = cap.read()
@@ -65,11 +65,11 @@ while True:
     for i, (new_cor, ori_cor) in enumerate(zip(match_curr, match_ori)):
         a, b = new_cor.ravel()  # 返回一维数据，new_cor内嵌套维度过高
         c, d = ori_cor.ravel()
-        mask = cv.line(mask, (a, b), (c, d), color[i].tolist(), 2)
-        frame = cv.circle(curr_frame, (a, b), 0, color[i].tolist(), -1)
+        # mask = cv.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+        frame = cv.circle(curr_frame, (a, b), 4, color[i].tolist(), -1)
     img = cv.add(curr_frame, mask)
     cv.imshow('frame', img)
-    k = cv.waitKey(100)  # 帧等待时间100
+    k = cv.waitKey()  # 帧等待时间100
     # if k == 27: & 0xff
     #     break
     # Now update the previous frame and  previous points
